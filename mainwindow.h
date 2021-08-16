@@ -9,8 +9,10 @@
 #include <QProgressBar>
 #include <QSlider>
 
-#include <QHBoxLayout>
-
+#include <QToolBar>
+#include <QAction>
+#include <QList>
+#include <QDebug>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -40,7 +42,9 @@ private:
     QProgressBar *bar;
     QSlider *slider;
 
-    QHBoxLayout *h_layout;
+    // Functions
+
+    void ShowActionsPlayPause(bool flag);
 
 };
 #endif // MAINWINDOW_H

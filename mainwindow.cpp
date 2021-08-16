@@ -12,26 +12,16 @@ MainWindow::MainWindow(QWidget *parent)
     player->setVideoOutput(vw);
     this->setCentralWidget(vw);
 
-
-    //QWidget *container = new QWidget;
-
     slider = new QSlider(this);
-
-    //h_layout = new QHBoxLayout(container);
-
-    //h_layout->addWidget(slider);
     slider->setOrientation(Qt::Horizontal);
 
-    //ui->statusbar->setLayout(h_layout);
     ui->toolBar->addWidget(slider);
     ui->toolBar->setMovable(false);
+    ShowActionsPlayPause(false);
 
     connect(player, &QMediaPlayer::durationChanged, slider, &QSlider::setMaximum);
     connect(player, &QMediaPlayer::positionChanged, slider, &QSlider::setValue);
     connect(slider, &QSlider::sliderMoved, player, &QMediaPlayer::setPosition);
-
-    //connect(player, &QMediaPlayer::durationChanged, bar, &QProgressBar::setMaximum);
-    //connect(player, &QMediaPlayer::positionChanged, bar, &QProgressBar::setValue);
 }
 
 MainWindow::~MainWindow()
@@ -49,24 +39,41 @@ void MainWindow::on_actionOpen_triggered()
     on_actionPlay_triggered();
 }
 
+void MainWindow::ShowActionsPlayPause(bool flag)
+{
+    QList<QAction*>  list_actions;
+    list_actions = ui->toolBar->actions();
+    if(flag)
+    {
+        list_actions[0]->setVisible(false);
+        list_actions[1]->setVisible(true);
+    }
+    else
+    {
+        list_actions[0]->setVisible(true);
+        list_actions[1]->setVisible(false);
+    }
+}
+
 void MainWindow::on_actionPlay_triggered()
 {
     player->play();
-    //ui->toolBar->addAction()
-    //ui->statusbar->showMessage("PLAYlsdfnkudsjislajdnfku,ijskdlafvdnsdadvfdas");
+    ShowActionsPlayPause(true);
 }
 
 
 void MainWindow::on_actionPause_triggered()
 {
     player->pause();
-    //ui->statusbar->showMessage("PAUSE");
+    ShowActionsPlayPause(false);
 }
 
 void MainWindow::on_actionStop_triggered()
 {
     player->stop();
-    //ui->statusbar->showMessage("STOP");
+    ShowActionsPlayPause(false);
+
+    //slider->setTickPosition(QSlider::TicksLeft);
 }
 
 

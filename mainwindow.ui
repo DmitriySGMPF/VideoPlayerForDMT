@@ -51,6 +51,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionPlay"/>
+   <addaction name="actionPause"/>
    <addaction name="actionStop"/>
   </widget>
   <action name="actionOpen">
