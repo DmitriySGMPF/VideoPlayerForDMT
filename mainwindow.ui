@@ -14,6 +14,20 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar_2</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>BottomToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionPlay"/>
+   <addaction name="actionPause"/>
+   <addaction name="actionStop"/>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
@@ -29,30 +43,7 @@
     </property>
     <addaction name="actionOpen"/>
    </widget>
-   <widget class="QMenu" name="menu_2">
-    <property name="title">
-     <string>Видео</string>
-    </property>
-    <addaction name="actionPlay"/>
-    <addaction name="actionPause"/>
-    <addaction name="actionStop"/>
-   </widget>
    <addaction name="menu"/>
-   <addaction name="menu_2"/>
-  </widget>
-  <widget class="QToolBar" name="toolBar">
-   <property name="windowTitle">
-    <string>toolBar_2</string>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>BottomToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-   <addaction name="actionPlay"/>
-   <addaction name="actionPause"/>
-   <addaction name="actionStop"/>
   </widget>
   <action name="actionOpen">
    <property name="icon">

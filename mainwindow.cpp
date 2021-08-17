@@ -15,12 +15,16 @@ MainWindow::MainWindow(QWidget *parent)
     slider = new QSlider(this);
     slider->setOrientation(Qt::Horizontal);
 
+    status_video_time = new QLabel;
+    status_video_time->setText("00:00");
+
     ui->toolBar->addWidget(slider);
+    ui->toolBar->addWidget(status_video_time);
     ui->toolBar->setMovable(false);
     ShowActionsPlayPause(false);
 
     connect(player, &QMediaPlayer::durationChanged, slider, &QSlider::setMaximum);
-    connect(player, &QMediaPlayer::positionChanged, slider, &QSlider::setValue);
+    connect(player, &QMediaPlayer::positionChanged, this, &MainWindow::SetSliderTimePosition);
     connect(slider, &QSlider::sliderMoved, player, &QMediaPlayer::setPosition);
 }
 
@@ -39,6 +43,12 @@ void MainWindow::on_actionOpen_triggered()
     on_actionPlay_triggered();
 }
 
+void MainWindow::SetSliderTimePosition(qint64 position)
+{
+    slider->setValue(position);
+    SetStatusVideoTime();
+}
+
 void MainWindow::ShowActionsPlayPause(bool flag)
 {
     QList<QAction*>  list_actions;
@@ -53,6 +63,34 @@ void MainWindow::ShowActionsPlayPause(bool flag)
         list_actions[0]->setVisible(true);
         list_actions[1]->setVisible(false);
     }
+}
+
+void MainWindow::SetStatusVideoTime()
+{
+    const qint64 currentInfo = player->position() / 1000;
+    const qint64 duration = player->duration() / 1000;
+    QString tStr;
+
+    if (currentInfo)
+    {
+        QTime currentTime((currentInfo / 3600) %60,
+                          (currentInfo / 60) % 60,
+                          (currentInfo % 60),
+                          (currentInfo * 1000) % 1000);
+        QTime totalTime((duration / 3600) % 60,
+                        (duration / 60) % 60,
+                        (duration % 60),
+                        (duration * 1000) % 1000);
+        QString format = "mm:ss";
+
+        if (duration > 3600)
+            format = "hh:mm:ss";
+
+        tStr = currentTime.toString(format) + " / " + totalTime.toString(format);
+    }
+
+    status_video_time->setText(tStr);
+
 }
 
 void MainWindow::on_actionPlay_triggered()
@@ -72,8 +110,6 @@ void MainWindow::on_actionStop_triggered()
 {
     player->stop();
     ShowActionsPlayPause(false);
-
-    //slider->setTickPosition(QSlider::TicksLeft);
 }
 
 

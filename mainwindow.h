@@ -12,6 +12,10 @@
 #include <QToolBar>
 #include <QAction>
 #include <QList>
+
+#include <QTime>
+#include <QLabel>
+
 #include <QDebug>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -35,16 +39,21 @@ private slots:
 
     void on_actionOpen_triggered();
 
+    void SetSliderTimePosition(qint64 position);
+
 private:
     Ui::MainWindow *ui;
     QMediaPlayer *player;
     QVideoWidget *vw;
     QProgressBar *bar;
     QSlider *slider;
+    QLabel *status_video_time;
 
     // Functions
 
     void ShowActionsPlayPause(bool flag);
+
+    void SetStatusVideoTime();
 
 };
 #endif // MAINWINDOW_H
